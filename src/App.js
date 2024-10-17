@@ -17,6 +17,7 @@ function App() {
     console.log("rr", response);
     setTodoList(response.data.data);
   };
+
   const addTask = async () => {
     try {
       const response = await api.post("/tasks", {
@@ -49,6 +50,22 @@ function App() {
     }
   };
 
+  const toggleComplete = async (id) => {
+    try {
+      const task = todoList.find((item) => item._id === id);
+      const response = await api.put(`tasks/${id}`, {
+        isComplete: !task.isComplete,
+      });
+      if (response.status === 200) {
+        getTasks();
+      } else {
+        throw new Error("task can not 끝남");
+      }
+    } catch (err) {
+      console.log("error", err);
+    }
+  };
+
   useEffect(() => {
     getTasks();
   }, []);
@@ -71,7 +88,11 @@ function App() {
         </Col>
       </Row>
 
-      <TodoBoard todoList={todoList} deleteTask={deleteTask} />
+      <TodoBoard
+        todoList={todoList}
+        deleteTask={deleteTask}
+        toggleComplete={toggleComplete}
+      />
     </Container>
   );
 }
