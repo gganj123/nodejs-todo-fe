@@ -25,7 +25,7 @@ function App() {
         isComplete: false,
       });
       if (response.status === 200) {
-        console.log("성공");
+        activeButton();
         setTodoValue("");
         getTasks();
       } else {
@@ -66,6 +66,15 @@ function App() {
     }
   };
 
+  const activeButton = () => {
+    alert(`${todoValue} 입력완료`);
+  };
+  const activeEnter = (e) => {
+    if (e.key === "Enter") {
+      addTask();
+    }
+  };
+
   useEffect(() => {
     getTasks();
   }, []);
@@ -79,6 +88,7 @@ function App() {
             className="input-box"
             value={todoValue}
             onChange={(event) => setTodoValue(event.target.value)}
+            onKeyDown={(event) => activeEnter(event)}
           />
         </Col>
         <Col xs={12} sm={2}>
