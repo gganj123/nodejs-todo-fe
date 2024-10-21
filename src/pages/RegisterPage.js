@@ -3,6 +3,8 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import api from "../utils/api";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -16,12 +18,17 @@ const RegisterPage = () => {
     event.preventDefault();
     try {
       if (password !== secPassword) {
-        //에러 : 비밀번호가 일치하지 않습니다.
+        toast.error("비밀번호가 일치하지 않습니다.", {
+          position: "top-center",
+        });
         throw new Error("비밀번호가 일치하지 않습니다.");
       }
       const response = await api.post("/user", { name, email, password });
       console.log("res", response);
       if (response.status === 200) {
+        toast.success("회원가입이 완료되었습니다!", {
+          position: "top-center",
+        });
         navigate("/login");
       } else {
         throw new Error(response.data.error);
@@ -76,6 +83,7 @@ const RegisterPage = () => {
           회원가입
         </Button>
       </Form>
+      <ToastContainer />
     </div>
   );
 };

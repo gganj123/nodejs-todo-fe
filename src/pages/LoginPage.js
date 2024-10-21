@@ -3,7 +3,8 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import api from "../utils/api";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
@@ -28,7 +29,9 @@ const LoginPage = () => {
         throw new Error(response.data.error || "로그인에 실패했습니다.");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("비밀번호가 일치하지 않습니다.", {
+        position: "top-center",
+      });
       setError(error.error || "서버 오류가 발생했습니다.");
     }
   };
@@ -65,6 +68,7 @@ const LoginPage = () => {
           </span>
         </div>
       </Form>
+      <ToastContainer />
     </div>
   );
 };
