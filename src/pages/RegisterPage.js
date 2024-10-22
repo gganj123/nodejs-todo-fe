@@ -17,12 +17,19 @@ const RegisterPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      if (password.length === 0) {
+        toast.error("비밀번호를 적어주세요.", {
+          position: "top-center",
+        });
+        throw new Error("비밀번호를 적어주세요.");
+      }
       if (password !== secPassword) {
         toast.error("비밀번호가 일치하지 않습니다.", {
           position: "top-center",
         });
         throw new Error("비밀번호가 일치하지 않습니다.");
       }
+
       const response = await api.post("/user", { name, email, password });
       console.log("res", response);
       if (response.status === 200) {
