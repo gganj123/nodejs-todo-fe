@@ -1,24 +1,21 @@
 import { React, useState } from "react";
 import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import api from "../utils/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
 
-const LoginPage = () => {
+const LoginPage = ({ setUser, user }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
       const response = await api.post("/user/login", { email, password });
-      console.log("ress", response);
 
       if (response.status === 200) {
         setUser(response.data.user);
@@ -35,7 +32,9 @@ const LoginPage = () => {
       setError(error.error || "서버 오류가 발생했습니다.");
     }
   };
-
+  if (user) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className="display-center">
       <Form className="login-box" onSubmit={handleLogin}>

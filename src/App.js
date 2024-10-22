@@ -38,7 +38,10 @@ function App() {
       />
       <Route path="/register" element={<RegisterPage />} />
 
-      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/login"
+        element={<LoginPage user={user} setUser={setUser} />}
+      />
     </Routes>
   );
 }
