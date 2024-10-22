@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
@@ -11,17 +11,33 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secPassword, setSecPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (password.trim().length < 3 || password.trim().length > 8) {
+      setPasswordError("비밀번호는 3자 이상 8자 이하로 입력해주세요.");
+    } else {
+      setPasswordError("");
+    }
+  }, [password]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      if (password.trim().length === 0) {
-        toast.error("비밀번호를 적어주세요.", {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        toast.error("올바른 이메일 형식을 입력해주세요.", {
           position: "top-center",
         });
-        throw new Error("비밀번호를 적어주세요.");
+        throw new Error("이메일 형식이 올바르지 않습니다.");
+      }
+      if (passwordError) {
+        toast.error("비밀번호를 확인해주세요.", {
+          position: "top-center",
+        });
+        throw new Error("비밀번호를 확인해주세요.");
       }
       if (password !== secPassword) {
         toast.error("비밀번호가 일치하지 않습니다.", {
@@ -31,7 +47,6 @@ const RegisterPage = () => {
       }
 
       const response = await api.post("/user", { name, email, password });
-      console.log("res", response);
       if (response.status === 200) {
         toast.success("회원가입이 완료되었습니다!", {
           position: "top-center",
@@ -75,13 +90,14 @@ const RegisterPage = () => {
             placeholder="Password"
             onChange={(event) => setPassword(event.target.value)}
           />
+          {passwordError && <div style={{ color: "red" }}>{passwordError}</div>}
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPasswordConfirm">
-          <Form.Label>re-enter the password</Form.Label>
+          <Form.Label>Re-enter the password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="re-enter the password"
+            placeholder="Re-enter the password"
             onChange={(event) => setSecPassword(event.target.value)}
           />
         </Form.Group>
