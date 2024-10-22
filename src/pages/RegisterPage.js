@@ -17,7 +17,7 @@ const RegisterPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      if (password.length === 0) {
+      if (password.trim().length === 0) {
         toast.error("비밀번호를 적어주세요.", {
           position: "top-center",
         });
