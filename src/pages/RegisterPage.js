@@ -27,6 +27,12 @@ const RegisterPage = () => {
     event.preventDefault();
     try {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!name) {
+        toast.error("이름을 적어주세요.", {
+          position: "top-center",
+        });
+        throw new Error("이름을 적어주세요.");
+      }
       if (!emailRegex.test(email)) {
         toast.error("올바른 이메일 형식을 입력해주세요.", {
           position: "top-center",

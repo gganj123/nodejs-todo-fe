@@ -7,7 +7,8 @@ const TodoItem = ({ item, deleteItem, toggleComplete }) => {
       <Col xs={12}>
         <div className={`todo-item ${item.isComplete ? "item-complete" : ""}`}>
           <div className="todo-content">{item.task}</div>
-
+          <div>by {item.author.name}</div>
+          //지금 이거 오류 생김 고쳐야함 item.author.name에 나오게하기
           <div>
             <button
               className="button-delete"
