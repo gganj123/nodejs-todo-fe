@@ -59,9 +59,15 @@ const RegisterPage = () => {
         });
         navigate("/login");
       } else {
+        toast.error(response.data.error, {
+          position: "top-center",
+        });
         throw new Error(response.data.error);
       }
     } catch (error) {
+      toast.error(error.error, {
+        position: "top-center",
+      });
       setError(error.error);
     }
   };
