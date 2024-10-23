@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import TodoPage from "./pages/TodoPage";
 import Header from "./components/Header";
@@ -25,6 +26,7 @@ function App() {
   const handleLogout = ({ setUser }) => {
     sessionStorage.removeItem("token");
     setUser(null);
+    Navigate("/login");
   };
 
   useEffect(() => {
