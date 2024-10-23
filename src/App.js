@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import TodoPage from "./pages/TodoPage";
+import Header from "./components/Header";
 import RegisterPage from "./pages/RegisterPage";
 import PrivateRoute from "./route/PrivateRoute";
 import api from "./utils/api";
@@ -21,28 +22,35 @@ function App() {
       setUser(null);
     }
   };
+  const handleLogout = ({ setUser }) => {
+    sessionStorage.removeItem("token");
+    setUser(null);
+  };
 
   useEffect(() => {
     getUSer();
   }, []);
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <PrivateRoute user={user}>
-            <TodoPage />
-          </PrivateRoute>
-        }
-      />
-      <Route path="/register" element={<RegisterPage />} />
+    <>
+      <Header user={user} handleLogout={handleLogout} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute user={user}>
+              <TodoPage />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/register" element={<RegisterPage />} />
 
-      <Route
-        path="/login"
-        element={<LoginPage user={user} setUser={setUser} />}
-      />
-    </Routes>
+        <Route
+          path="/login"
+          element={<LoginPage user={user} setUser={setUser} />}
+        />
+      </Routes>
+    </>
   );
 }
 
