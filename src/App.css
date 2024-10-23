@@ -5,8 +5,8 @@ header {
 }
 
 body {
-  color: lightblue !important ;
-  background-color: aliceblue !important;
+  color: gray !important ;
+  background-color: white !important;
 }
 
 .todo-item {
@@ -27,6 +27,7 @@ body {
   padding: 10px;
   width: 100%;
   border: 1px solid lightblue;
+  border-radius: 10px;
 }
 .input-box:focus {
   outline: none;
@@ -34,6 +35,7 @@ body {
 button {
   background-color: lightblue;
   color: white;
+  border-radius: 10px;
 }
 .button-add {
   height: 40px;
@@ -60,7 +62,8 @@ button {
 
 .item-complete {
   background-color: gainsboro;
-  color: white;
+  color: gray;
+  text-decoration: line-through;
 }
 
 .login-box {
@@ -95,4 +98,25 @@ button {
 
 .red-error {
   color: red;
+}
+
+.todo-item {
+  padding: 20px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.todo-content {
+  font-size: 18px;
+}
+
+.button-delete {
+  margin-right: 10px;
 }

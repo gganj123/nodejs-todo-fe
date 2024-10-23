@@ -1,8 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import TodoPage from "./pages/TodoPage";
 import Header from "./components/Header";
@@ -12,6 +11,7 @@ import api from "./utils/api";
 
 function App() {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
   const getUSer = async () => {
     try {
       const storedToken = sessionStorage.getItem("token");
@@ -23,10 +23,10 @@ function App() {
       setUser(null);
     }
   };
-  const handleLogout = ({ setUser }) => {
+  const handleLogout = () => {
     sessionStorage.removeItem("token");
     setUser(null);
-    Navigate("/login");
+    navigate("/login");
   };
 
   useEffect(() => {
